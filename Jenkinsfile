@@ -3,12 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/Qaleelsha/MediCare.git'
-            }
-        }
-
         stage('Install Backend Dependencies') {
             steps {
                 dir('backend') {
