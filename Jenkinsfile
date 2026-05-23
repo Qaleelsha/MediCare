@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'YOUR_GITHUB_REPO_URL'
+                git 'https://github.com/Qaleelsha/MediCare.git'
             }
         }
 
@@ -25,16 +25,40 @@ pipeline {
             }
         }
 
-        stage('Build Docker Containers') {
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Docker Compose Build') {
             steps {
                 sh 'docker compose build'
             }
         }
 
-        stage('Run Containers') {
+        stage('Deploy Containers') {
             steps {
                 sh 'docker compose up -d'
             }
+        }
+
+        stage('Verify Running Containers') {
+            steps {
+                sh 'docker ps'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'MediCare CI/CD Pipeline Executed Successfully!'
+        }
+
+        failure {
+            echo 'Pipeline Failed!'
         }
     }
 }
