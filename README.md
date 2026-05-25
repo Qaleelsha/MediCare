@@ -36,24 +36,24 @@ MONGO_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=your_secure_jwt_secret_key
 NODE_ENV=development
 
-### 2. Standard Execution
+2. Standard Execution
 Start the Backend:
 cd backend
 npm install
 npm run dev
 
-#Start the Frontend:
+Start the Frontend:
 cd frontend
 npm install
 npm run dev
 
-### 3. Dockerized Execution (Recommended)
+3. Dockerized Execution (Recommended)
 To test the production-ready containerized environment locally:
 docker compose up --build
 The API will be available on localhost:5000
 The Frontend will be available on localhost:3000
 
-## 🔐 Security Implementations
+🔐 Security Implementations
 Authentication: Stateless session management via JSON Web Tokens (JWT).
 
 Data Protection: Passwords are mathematically hashed using bcryptjs with a secure salt round before database insertion.
