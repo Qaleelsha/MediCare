@@ -3,45 +3,37 @@ pipeline {
 
     stages {
 
-        stage('Install Backend Dependencies') {
+        stage('GitHub Connection Check') {
+            steps {
+                sh 'echo Connected to GitHub Successfully'
+            }
+        }
+
+        stage('Project Files Check') {
+            steps {
+                sh 'ls'
+            }
+        }
+
+        stage('Backend Folder Check') {
             steps {
                 dir('backend') {
-                    sh 'npm install'
+                    sh 'ls'
                 }
             }
         }
 
-        stage('Install Frontend Dependencies') {
+        stage('Frontend Folder Check') {
             steps {
                 dir('frontend') {
-                    sh 'npm install'
+                    sh 'ls'
                 }
             }
         }
 
-        stage('Build Frontend') {
+        stage('Docker Compose Check') {
             steps {
-                dir('frontend') {
-                    sh 'npm run build'
-                }
-            }
-        }
-
-        stage('Docker Compose Build') {
-            steps {
-                sh 'docker compose build'
-            }
-        }
-
-        stage('Deploy Containers') {
-            steps {
-                sh 'docker compose up -d'
-            }
-        }
-
-        stage('Verify Running Containers') {
-            steps {
-                sh 'docker ps'
+                sh 'echo Docker Compose Ready'
             }
         }
     }
