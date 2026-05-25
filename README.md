@@ -37,6 +37,7 @@ JWT_SECRET=your_secure_jwt_secret_key
 NODE_ENV=development
 
 2. Standard Execution
+
 Start the Backend:
 cd backend
 npm install
