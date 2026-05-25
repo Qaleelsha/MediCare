@@ -1,187 +1,61 @@
-# 🏥 MediCare – Hospital Appointment Booking Platform
+# MediCare – Cloud-Native Healthcare Platform
 
-MediCare is a full-stack hospital appointment booking platform developed using the MERN stack with Docker, Jenkins CI/CD, AWS EC2 deployment, Prometheus monitoring, and Grafana dashboards.
-
-The platform allows users to register, login securely, browse doctors based on specialization, and book appointments online.
+MediCare is a full-stack, containerized healthcare appointment booking platform. Engineered with a microservices-oriented approach, the system relies on a MERN stack backend, automated CI/CD deployment pipelines, and a dedicated observability layer for real-time monitoring.
 
 ---
 
-# 🚀 Features
+## 🏗️ System Architecture & Infrastructure
 
-## 👤 User Features
+The platform is designed for scalability and high availability, utilizing modern DevOps practices for deployment and monitoring.
 
-* User Registration & Login
-* JWT Authentication
-* Secure Password Hashing
-* Book Doctor Appointments
-* Browse Available Doctors
-* View Doctor Specializations
-* Responsive Modern UI
+### 1. Application Tier (MERN Stack)
+* **Frontend:** Built with React.js and Tailwind CSS for a highly responsive UI. Communicates with the backend via Axios using JWT-based Bearer tokens.
+* **Backend API:** Node.js and Express.js REST API providing secure endpoints for user registration, authentication (bcryptjs), and appointment scheduling. 
+* **Database:** MongoDB Atlas acts as the cloud database layer, managing relational mappings between Users, Doctors, and Appointment time slots.
 
----
+### 2. CI/CD & Deployment Pipeline
+* **Continuous Integration:** A Jenkins pipeline is configured via a `Jenkinsfile`. It listens for webhook triggers from GitHub, builds the application artifacts, and runs automated integration checks.
+* **Containerization:** The frontend and backend are completely decoupled and containerized using Docker. Multi-container orchestration is handled via `docker-compose`.
+* **Cloud Hosting:** Deployed on an AWS EC2 (Ubuntu) instance with strict security group configurations limiting access to essential ports (HTTP/HTTPS, SSH, and monitoring ports).
 
-## 🩺 Doctor Features
-
-* Doctor Listing
-* Specialization Details
-* Available Timings
-* Consultation Fee Display
+### 3. Observability & Monitoring
+* **Metrics Aggregation:** Prometheus is configured (`prometheus.yml`) to scrape real-time telemetry and resource usage metrics from the backend Node.js containers.
+* **Data Visualization:** Grafana interfaces directly with Prometheus to display live dashboards monitoring container health, API response latencies, and EC2 system metrics.
 
 ---
 
-## ⚙️ DevOps & Cloud Features
+## ⚙️ Local Development Setup
 
-* Dockerized Frontend & Backend
-* Docker Compose Orchestration
-* Jenkins CI/CD Pipeline
-* AWS EC2 Deployment
-* MongoDB Atlas Integration
-* Prometheus Monitoring
-* Grafana Dashboard Integration
+To run this project locally, you must configure your environment variables. 
 
----
+### 1. Environment Configuration
+Create a `.env` file in the `/backend` directory and add the following keys:
+```env
+PORT=5000
+MONGO_URI=your_mongodb_atlas_connection_string
+JWT_SECRET=your_secure_jwt_secret_key
+NODE_ENV=development
 
-# 🛠️ Tech Stack
-
-## Frontend
-
-* React.js
-* Tailwind CSS
-* Axios
-* Framer Motion
-
-## Backend
-
-* Node.js
-* Express.js
-* MongoDB Atlas
-* JWT Authentication
-* bcryptjs
-
-## DevOps & Cloud
-
-* Docker
-* Docker Compose
-* Jenkins
-* AWS EC2
-* Prometheus
-* Grafana
-
----
-
-# 📂 Project Structure
-
-```bash
-MediCare/
-│
-├── frontend/
-├── backend/
-├── docker-compose.yml
-├── Jenkinsfile
-├── prometheus.yml
-└── README.md
-```
-
----
-
-# ⚡ Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/Qaleelsha/MediCare.git
-cd MediCare
-```
-
----
-
-# Run Locally
-
-## Start Backend
-
-```bash
+### 2. Standard Execution
+Start the Backend:
 cd backend
 npm install
 npm run dev
-```
 
-## Start Frontend
-
-```bash
+#Start the Frontend:
 cd frontend
 npm install
 npm run dev
-```
 
----
-
-# 🐳 Docker Setup
-
-```bash
+### 3. Dockerized Execution (Recommended)
+To test the production-ready containerized environment locally:
 docker compose up --build
-```
+The API will be available on localhost:5000
+The Frontend will be available on localhost:3000
 
----
+## 🔐 Security Implementations
+Authentication: Stateless session management via JSON Web Tokens (JWT).
 
-# ☁️ AWS EC2 Deployment
+Data Protection: Passwords are mathematically hashed using bcryptjs with a secure salt round before database insertion.
 
-The application was deployed using:
-
-* AWS EC2 Ubuntu Instance
-* Docker Containers
-* MongoDB Atlas Cloud Database
-
----
-
-# 📊 Monitoring
-
-Monitoring tools integrated:
-
-* Prometheus
-* Grafana
-
-Used for:
-
-* Container Monitoring
-* Resource Monitoring
-* System Metrics Visualization
-
----
-
-# 🔐 Authentication
-
-* JWT-based Authentication
-* Password Encryption using bcryptjs
-
----
-
-# 📸 Future Improvements
-
-* Payment Gateway Integration
-* Video Consultation
-* Admin Dashboard
-* Email Notifications
-* Appointment History
-* Doctor Login Panel
-
----
-
-# 👨‍💻 Author
-
-Qaleel Sha Backer
-
-B.Tech CSE – Data Science & Machine Learning
-
-Lovely Professional University
-
----
-
-# ⭐ Project Highlights
-
-✅ Full Stack MERN Project
-✅ Dockerized Application
-✅ AWS Cloud Deployment
-✅ Jenkins CI/CD Pipeline
-✅ Prometheus Monitoring
-✅ Grafana Dashboard
-✅ MongoDB Atlas Integration
+Cloud Security: AWS EC2 deployment utilizes IAM roles and strictly bound Security Groups, ensuring the MongoDB Atlas cluster only accepts connections from the whitelisted EC2 IP address.
